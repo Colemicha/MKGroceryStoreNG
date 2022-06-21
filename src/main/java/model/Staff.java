@@ -5,5 +5,6 @@ public class Staff {
 
     public Staff(int staffId) {
         this.staffId = staffId;
+
     }
 }
