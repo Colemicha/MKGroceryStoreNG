@@ -16,7 +16,6 @@ public class Customers implements BuyProducts{
         products.add(product);
         System.out.println("Goods bought");
 
-
     }
     public ArrayList<Products> getProducts() {
         return products;

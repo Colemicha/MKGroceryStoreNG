@@ -23,11 +23,22 @@ public class Manager extends Staff implements ManagerRole{
         this.name = name;
     }
 
+    public ArrayList<Cashier> getCashier() {
+        return cashier;
+    }
 
-    public Void toHire(Cashier addCashier) {
-        cashier.add(addCashier);
-        System.out.println("Cashier added");
+    public void setCashier(ArrayList<Cashier> cashier) {
+        this.cashier = cashier;
+    }
 
-        return null;
+    public String  toHire(Cashier addCashier) {
+
+        if(cashier.contains(addCashier)){
+            return "Cashier "+addCashier.getName()+" already hired";
+        }
+        else {
+            cashier.add(addCashier);
+            return "Congrats "+addCashier.getName()+"!!! you are hired";
+        }
     }
 }
