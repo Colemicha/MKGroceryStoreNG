@@ -2,5 +2,5 @@ package model;
 
 public interface cashierDuty {
 
-    String issueReceipt();
+    String issueReceipt(String s);
 }

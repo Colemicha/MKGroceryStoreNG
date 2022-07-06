@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ManagerTest {
-    Manager manager = new Manager(1234, "Godwin");
+    Manager manager = new Manager("Godwin");
     Customers customer = new Customers("David", "Male");
-    Cashier cashier = new Cashier(1234, "Michelle", customer);
+    Cashier cashier = new Cashier("Michelle", customer);
 
     @Test
     void toHireTest() {

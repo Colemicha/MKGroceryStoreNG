@@ -6,38 +6,29 @@ import interfaces.ManagerRole;
 import java.util.ArrayList;
 
 public class Manager extends Staff implements ManagerRole{
-    private String name;
-    private ArrayList<Cashier> cashier;
 
-    public Manager(int staffId, String name) {
-        super(staffId);
-        this.name = name;
-        this.cashier = new ArrayList<>();
+    private ArrayList<Cashier> cashiers;
+
+    public Manager( String name) {
+        super(name);
+        this.cashiers = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
+    public ArrayList<Cashier> getCashiers() {
+        return cashiers;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public ArrayList<Cashier> getCashier() {
-        return cashier;
-    }
-
-    public void setCashier(ArrayList<Cashier> cashier) {
-        this.cashier = cashier;
+    public void setCashiers(ArrayList<Cashier> cashiers) {
+        this.cashiers = cashiers;
     }
 
     public String  toHire(Cashier addCashier) {
 
-        if(cashier.contains(addCashier)){
+        if(cashiers.contains(addCashier)){
             return "Cashier "+addCashier.getName()+" already hired";
         }
         else {
-            cashier.add(addCashier);
+            cashiers.add(addCashier);
             return "Congrats "+addCashier.getName()+"!!! you are hired";
         }
     }

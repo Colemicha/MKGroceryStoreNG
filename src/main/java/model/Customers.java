@@ -6,17 +6,28 @@ public class Customers implements BuyProducts{
     private String customerName;
     private String gender;
     private ArrayList<Products> products;
+    private int wallet=5000;
 
     public Customers (String customerName, String gender) {
         this.customerName = customerName;
         this.gender = gender;
         this.products = new ArrayList<>();
+        this.wallet = wallet;
     }
     public void buyGoods(Products product) {
         products.add(product);
         System.out.println("Goods bought");
 
     }
+
+    public int getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(int wallet) {
+        this.wallet = wallet;
+    }
+
     public ArrayList<Products> getProducts() {
         return products;
     }

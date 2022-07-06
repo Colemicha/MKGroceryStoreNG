@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CustomersTest {
     Customers customer = new Customers("David", "Male");
-    Products product  = new Products("Egg");
+    Products product  = new Products("Egg","rfv",90,3.0);
 
     @Test
     void buyGoods() {
