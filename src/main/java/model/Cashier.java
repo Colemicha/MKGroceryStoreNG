@@ -1,24 +1,20 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
-public class Cashier extends Staff implements cashierDuty{
+public class Cashier extends Staff {
     private String name;
-    private Customers customers;
-    private ArrayList<Products> products;
 
-    public Cashier(String name, Customers customers) {
+    public Cashier(String name) {
+
         super(name);
-        this.customers = customers;
-        this.products = new ArrayList<>();
     }
 
-    public void sellGoods(Products product){
-        products.add(product);
-        System.out.println("Goods sold");
-    }
 
     public String getName() {
+
         return name;
     }
 
@@ -26,62 +22,60 @@ public class Cashier extends Staff implements cashierDuty{
         this.name = name;
     }
 
-    public Customers getCustomers() {
-        return customers;
+
+    private boolean printReceipt(Customers customer) {
+        System.out.println("ProductName   Qty   Amount");
+        for (Products product : customer.getCustomerCart().values()) {
+            System.out.println(product.getProductName() + "    " + product.getQuantity() + "  " + (product.getUnitPrice() * product.getQuantity()));
+        }
+        return true;
     }
 
-    public void setCustomers(Customers customers) {
-        this.customers = customers;
+    /*
+   get the total amount of goods the customer is buying.
+   check if the wallet balance is greater than total amount
+   if yes sell and issue receipt reduce the wallet balance, if no, print insufficient funds.
+    */
+    public boolean sellToCustomer(Customers customer, HashMap<String, Products> inventory) {
+        double totalAmount = 0;
+        for (Products product : customer.getCustomerCart().values()) {
+            String key = product.getProductName();
+            product.setUnitPrice(inventory.get(key).getUnitPrice());
+            totalAmount += inventory.get(key).getUnitPrice() * product.getQuantity();
+        }
+        if (customer.getWallet() > totalAmount) {
+            customer.setWallet(customer.getWallet() - totalAmount);
+            printReceipt(customer);
+            return true;
+        } else {
+            System.out.println("Insufficient Funds to carry out this transaction");
+            return false;
+        }
+    }
+    public int CustomerProductIndex(Customers customers, String customerProducts) {
+        int position = -1;
+        for(Products products : customers.getCustomerCart().values()) {
+            if(Objects.equals(products.getProductName(), customerProducts)) {
 
+            }
+
+        }
 
     }
 
-    public ArrayList<Products> getProducts() {
-        return products;
-    }
+    public String sortCustomersByQueue() {
+        Store store = new Store();
+        store.getProducts().forEach(products -> {
+            Comparable<Customers> customersComparable = new Comparable<Customers>() {
+                @Override
+                public int compareTo(Customers o) {
 
-    public void setProducts(ArrayList<Products> products) {
-        this.products = products;
-    }
-
-    public void customerBuy(Customers customer){
-        customer = this.customers;
-        int total=0;
-        String receipt="";
-        for(Products customerList : customer.getProducts()){
-
-            for(Products productsInStock: Products.Stock){
-                if(productsInStock.getProduct().equals(customerList.getProduct())){
-                    //this is where you check their quantities i.e customerList<=productInStock
-                    if(customerList.getQuantity()<=productsInStock.getQuantity()) {
-                        //the amount customerList and multiply by the price in productsInStock
-                        double use= customerList.getQuantity()*productsInStock.getUnitPrice();
-                        //add to total
-                        total+=use;
-                        System.out.println(productsInStock.getQuantity());
-                        //remove qty in customerList from productsInStock
-                        long minus=productsInStock.getQuantity()- customerList.getQuantity();
-                        productsInStock.setQuantity(minus);
-                        System.out.println(productsInStock.getQuantity());
-                        // qty in customerList + name of customerList+ (qty in customerList*price in productsInStock)+\n
-                        receipt+= customerList.getQuantity()+"\t"+ customerList.getProduct()+"\t \t"+use+"\n";
-                    }
+                    return 0;
                 }
             }
-        }
-        receipt+="\n"+total;
-        if(customer.getWallet() >= total) {
-            System.out.println(issueReceipt(receipt));
-        }
-        else {
-            System.out.println("No sale");
-        }
+        });
 
     }
 
-    @Override
-    public String issueReceipt(String s) {
-        return "Hello " + getCustomers().getCustomerName() +  " You Bought The following Products" + getProducts()
-                +"\n"+s;
-    }
+
 }

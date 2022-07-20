@@ -4,15 +4,15 @@ import Enums.Status;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Products {
-    private String Product;
-    private long Quantity;
-    private double UnitPrice;
-    private String Category;
+    private String productName;
+    private long quantity;
+    private double unitPrice;
+    private String category;
     private Status status;
 
-public static ArrayList<Products> Stock=new ArrayList<>();
 
     public Status getStatus() {
         return status;
@@ -23,61 +23,68 @@ public static ArrayList<Products> Stock=new ArrayList<>();
     }
 
     public String getCategory() {
-        return Category;
+        return category;
     }
 
     public void setCategory(String category) {
-        this.Category = category;
+        this.category = category;
     }
 
-    public String getProduct() {
-        return Product;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProduct(String productName) {
-        this.Product = productName;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public long getQuantity() {
-        return Quantity;
+        return quantity;
     }
 
     public void setQuantity(long quantity) {
-        this.Quantity = quantity;
+        this.quantity = quantity;
     }
 
     public double getUnitPrice() {
-        return UnitPrice;
+        return unitPrice;
     }
 
     public void setUnitPrice(double price) {
-        this.UnitPrice = price;
+        this.unitPrice = price;
     }
+
 
     public Products(String category, String product,long quantity, double price){//for store
-        this.Product = product;
-        this.Quantity = quantity;
-        this.UnitPrice = price;
-        this.Category = category;
+        this.productName = product;
+        this.quantity = quantity;
+        this.unitPrice = price;
+        this.category = category;
     }
 
 
-
-    public Products(String product, long quantity){//customer
-        this.Product = product;
-        this.Quantity = quantity;
+    public Products(String customerProducts, long quantity) {
+        this.productName = customerProducts;
+        this.quantity = quantity;
     }
 
     @Override
     public String toString() {
-        return  Product ;
+        return String.format("%-10s %-16s %-10d %-10.2f", category, productName, quantity, unitPrice) ;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 
     public static List<Products> categorize(String category) {
         List<Products>categoryList = new ArrayList<>();
-        for(Products product: Stock) {
+        for(Products product: categoryList) {
             if(product.getCategory().equalsIgnoreCase(category)) {
-                categoryList.add(product);
+                if(product.getStatus()==Status.IN_STOCK){
+                    categoryList.add(product);
+                }
             }
         }
         return categoryList;
